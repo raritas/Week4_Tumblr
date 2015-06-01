@@ -1,0 +1,146 @@
+//
+//  TabBarViewController.swift
+//  Week4_Tumblr
+//
+//  Created by June Lim on 5/30/15.
+//  Copyright (c) 2015 June Lim. All rights reserved.
+//
+
+import UIKit
+
+class TabBarViewController: UIViewController, UIViewControllerTransitioningDelegate {
+
+    @IBOutlet weak var tabBackgroundView: UIView!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var contentOverlayView: UIView!
+    @IBOutlet weak var homeButton: UIButton!
+    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var accountButton: UIButton!
+    @IBOutlet weak var trendingButton: UIButton!
+    @IBOutlet weak var exploreView: UIImageView!
+    
+    var HomeViewController: UIViewController!
+    var SearchViewController: UIViewController!
+    var ComposeViewController: UIViewController!
+    var AccountViewController: UIViewController!
+    var TrendingViewController: UIViewController!
+    var isPresenting: Bool = true
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        var storyboard = UIStoryboard(name: "Main", bundle: nil)
+        HomeViewController = storyboard.instantiateViewControllerWithIdentifier("HomeViewController") as! UIViewController
+        SearchViewController = storyboard.instantiateViewControllerWithIdentifier("SearchViewController") as! UIViewController
+        ComposeViewController = storyboard.instantiateViewControllerWithIdentifier("ComposeViewController") as! UIViewController
+        AccountViewController = storyboard.instantiateViewControllerWithIdentifier("AccountViewController") as! UIViewController
+        TrendingViewController = storyboard.instantiateViewControllerWithIdentifier("TrendingViewController") as! UIViewController
+        
+        // INITIAL VIEW SETTING
+        addChildViewController(HomeViewController)
+        contentView.addSubview(HomeViewController.view)
+        selectedState(1)
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        var destinationVC = segue.destinationViewController as! UIViewController
+        destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
+        destinationVC.transitioningDelegate = self
+        
+    }
+    
+    
+    @IBAction func onHomeButtonTap(sender: AnyObject) {
+        addChildViewController(HomeViewController)
+        contentView.addSubview(HomeViewController.view)
+        selectedState(1)
+    }
+
+    @IBAction func onSearchButtonTap(sender: AnyObject) {
+        addChildViewController(SearchViewController)
+        contentView.addSubview(SearchViewController.view)
+        selectedState(2)
+    }
+    /*
+    @IBAction func onComposeButtonTap(sender: AnyObject) {
+        addChildViewController(ComposeViewController)
+        contentView.addSubview(ComposeViewController.view)
+        selectedState(3)
+    }
+    */
+    @IBAction func onAccountButtonTap(sender: AnyObject) {
+        addChildViewController(AccountViewController)
+        contentView.addSubview(AccountViewController.view)
+        selectedState(4)
+    }
+    
+    @IBAction func onTrendingButtonTap(sender: AnyObject) {
+        addChildViewController(TrendingViewController)
+        contentView.addSubview(TrendingViewController.view)
+        selectedState(5)
+    }
+    
+    
+    // FUNCTION TO CONTROL THE SELECTED STATE OF THE BUTTONS
+    
+    func selectedState(state: Int) {
+        if state == 1 {
+            homeButton.selected = true
+            searchButton.selected = false
+            accountButton.selected = false
+            trendingButton.selected = false
+            exploreView.alpha = 1
+        } else if state == 2 {
+            homeButton.selected = false
+            searchButton.selected = true
+            accountButton.selected = false
+            trendingButton.selected = false
+            exploreView.alpha = 0
+        } else if state == 3 {
+            homeButton.selected = false
+            searchButton.selected = false
+            accountButton.selected = false
+            trendingButton.selected = false
+            exploreView.alpha = 1
+        } else if state == 4 {
+            homeButton.selected = false
+            searchButton.selected = false
+            accountButton.selected = true
+            trendingButton.selected = false
+            exploreView.alpha = 1
+        } else if state == 5 {
+            homeButton.selected = false
+            searchButton.selected = false
+            accountButton.selected = false
+            trendingButton.selected = true
+            exploreView.alpha = 1
+        }
+
+    
+    
+    
+    
+    }
+    
+    
+    
+   
+    
+    
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
